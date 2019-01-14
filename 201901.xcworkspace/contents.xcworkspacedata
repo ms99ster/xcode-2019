@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:S01-PlayMp3/S01-PlayMp3.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:S02-showText/S02-showText.xcodeproj">
+   </FileRef>
+</Workspace>
