@@ -7,4 +7,7 @@
    <FileRef
       location = "group:S02-showText/S02-showText.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:S03-SQLite/S03-SQLite.xcodeproj">
+   </FileRef>
 </Workspace>
