@@ -21,6 +21,8 @@ class S03SQLite: NSObject {
     let desc = Expression<String>("description")
     let mp3URL = Expression<String>("mp3_url")
     let htmlURL = Expression<String>("html_url")
+    let expireDate = Expression<Date>("expireDate")
+    let expireDate2 = Expression<Date>("expireDate2")
     override init() {
         db = try! Connection.init(ducumentPath)
     }
@@ -33,8 +35,11 @@ class S03SQLite: NSObject {
             builder.column(desc)
             builder.column(mp3URL)
             builder.column(htmlURL)
+            builder.column(expireDate)
+            builder.column(expireDate2)
         }
         do {
+            try db.run(messageList.drop(ifExists: true))
             try db.run(createTable)
         } catch  {
             print(error.localizedDescription)
@@ -44,12 +49,15 @@ class S03SQLite: NSObject {
     func insert() -> Int64?{
         var rowid:Int64 = 0
         do {
-            rowid = try (db?.run(messageList.insert(uid <- "S1",
+            rowid = try (db.run(messageList.insert(uid <- "S1",
                                                     name <- "name1",
                                                     desc <- "description1",
                                                     mp3URL <- "https://fs-gateway.esdict.cn/store_main/sentencemp3/0qDG0C7bnZrL0jhpVb9T4OGdAnM=.mp3",
-                                                    htmlURL <- "https://raw.githubusercontent.com/ms99ster/learn/master/README.md")
-                ))!
+                                                    htmlURL <- "https://raw.githubusercontent.com/ms99ster/learn/master/README.md",
+                                                    expireDate <- Date(),
+                                                    expireDate2 <- Date()
+                )
+                ))
             
         }catch {
             print(error)
@@ -68,6 +76,8 @@ class S03SQLite: NSObject {
                 dic.updateValue(item[desc] as String, forKey: "description")
                 dic.updateValue(item[mp3URL] as String, forKey: "mp3URL")
                 dic.updateValue(item[htmlURL] as String, forKey: "htmlURL")
+                dic.updateValue(item[expireDate] as Date, forKey: "expireDate")
+                dic.updateValue(item[expireDate2] as Date, forKey: "expireDate2")
                 array.append(dic)
             }
         } catch  {
