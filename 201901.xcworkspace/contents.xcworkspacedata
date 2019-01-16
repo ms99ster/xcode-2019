@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:S04-Date/S04-Date.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:S01-PlayMp3/S01-PlayMp3.xcodeproj">
    </FileRef>
    <FileRef
