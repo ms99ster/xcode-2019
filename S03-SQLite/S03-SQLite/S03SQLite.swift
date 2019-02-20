@@ -49,15 +49,18 @@ class S03SQLite: NSObject {
     func insert() -> Int64?{
         var rowid:Int64 = 0
         do {
-            rowid = try (db.run(messageList.insert(uid <- "S1",
-                                                    name <- "name1",
-                                                    desc <- "description1",
-                                                    mp3URL <- "https://fs-gateway.esdict.cn/store_main/sentencemp3/0qDG0C7bnZrL0jhpVb9T4OGdAnM=.mp3",
-                                                    htmlURL <- "https://raw.githubusercontent.com/ms99ster/learn/master/README.md",
-                                                    expireDate <- Date(),
-                                                    expireDate2 <- Date()
-                )
-                ))
+            rowid = try (
+                db.run(
+                    messageList.insert(
+                        uid <- "S1",
+                        name <- "name1",
+                        desc <- "description1",
+                        mp3URL <- "https://fs-gateway.esdict.cn/store_main/sentencemp3/0qDG0C7bnZrL0jhpVb9T4OGdAnM=.mp3",
+                        htmlURL <- "https://raw.githubusercontent.com/ms99ster/learn/master/README.md",
+                        expireDate <- Date(),
+                        expireDate2 <- Date()
+                    )
+            ))
             
         }catch {
             print(error)
