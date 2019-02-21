@@ -12,7 +12,33 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var textInputView: UITextField!
     
+    @IBOutlet weak var textInputView2: UITextField!
+    
+    @IBOutlet weak var textInputView3: UITextField!
+    
+    @IBOutlet weak var textInputView4: UITextField!
+    
+    weak var editingText: UITextField?
+    
+
     @IBAction func textFocused(_ sender: UITextField) {
+        print(sender.restorationIdentifier)
+        switch sender.restorationIdentifier {
+        case "text1":
+            editingText = textInputView
+            uiDatePicker.datePickerMode = .date
+        case "text2":
+            editingText = textInputView2
+            uiDatePicker.datePickerMode = .time
+        case "text3":
+            editingText = textInputView3
+            uiDatePicker.datePickerMode = .dateAndTime
+        case "text4":
+            editingText = textInputView4
+            uiDatePicker.datePickerMode = .countDownTimer
+        default:
+            print("never shold run")
+        }
     }
     
     lazy var uiDatePicker : UIDatePicker = getDatePickerView();
@@ -21,15 +47,27 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textInputView.text = formatDate(date: Date())
-        textInputView.inputView = uiDatePicker
-        textInputView.inputAccessoryView = uiToolBar
+        let textEditorDictionary: [String: Any] = [
+            "text1":(uiTextField: textInputView, datepickerMode: UIDatePicker.Mode.date, dateformat: "yyyy-MM-dd"),
+            "text2":(uiTextField: textInputView2, datepickerMode: UIDatePicker.Mode.date, dateformat: "HH:mm:ss"),
+            "text3":(uiTextField: textInputView3, datepickerMode: UIDatePicker.Mode.date, dateformat: "yyyy-MM-dd HH:mm:ss"),
+            "text4":(uiTextField: textInputView4, datepickerMode: UIDatePicker.Mode.date, dateformat: "mm:ss")
+        ]
+        
+        for inputView in textEditorDictionary {
+            let textEditor = inputView.value as! (uiTextField: UITextField?, datepickerMode: UIDatePicker.Mode, dateformat: String)
+            
+            bindInputView(inputView: textEditor.uiTextField, dateFormat: textEditor.dateformat)
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    func bindInputView(inputView: UITextField!, dateFormat: String){
+        inputView.text = formatDate(date: Date(), dateFormat:  dateFormat)
+        inputView.inputView = uiDatePicker
+        inputView.inputAccessoryView = uiToolBar
+    }
     func getDatePickerView() -> UIDatePicker{
         uiDatePicker = UIDatePicker()
-        uiDatePicker.datePickerMode = .date
         uiDatePicker.locale = Locale.init(identifier: "zh-Hans")
         return uiDatePicker;
     }
@@ -47,23 +85,21 @@ class ViewController: UIViewController {
     }
     
     @objc func cancelSelected(){
-        textInputView.endEditing(true)
+        editingText!.endEditing(true)
         print("cancel btn clicked")
     }
     
     @objc func okSelected(){
         print("done btn clicked")
         let date = uiDatePicker.date
-        let calendar = uiDatePicker.calendar
         print(date)
         
-       
-        textInputView.text = formatDate(date: date)
-        textInputView.endEditing(true)
+        editingText!.text = formatDate(date: date, dateFormat: "yyyy-MM-dd HH:mm:ss")
+        editingText!.endEditing(true)
     }
-    func formatDate(date: Date) -> String{
+    func formatDate(date: Date, dateFormat: String) -> String{
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = dateFormat
         return dateFormatter.string(from: date)
     }
 
