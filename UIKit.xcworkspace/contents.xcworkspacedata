@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Content_Views-UIImageView/Content_Views-UIImageView.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Content_Views-UIDatePicker/Content_Views-UIDatePicker.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Content_Views-UIPickerView/Content_Views-UIPickerView.xcodeproj">
    </FileRef>
 </Workspace>
